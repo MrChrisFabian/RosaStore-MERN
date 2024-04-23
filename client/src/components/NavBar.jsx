@@ -25,7 +25,7 @@ const NavBar = () => {
 
     return (
         <div>
-            <nav className="overflow-auto sticky top-0 z-10 backdrop-filter backdrop-blur-lg bg-white bg-opacity-20 rounded-b
+            <nav className="p-4 overflow-auto sticky top-0 z-10 backdrop-filter backdrop-blur-lg bg-white bg-opacity-20 rounded-b
     border-b boder-solid border-indigo-100 border-opacity-5"
             >
                 <div className="p-4 flex text-lg md:text-md items-center content-center justify-between h-12 bg-gradient-to-r from-slate-600 via-slate-700 to-slate-600 text-transparent bg-clip-text text-center tracking-tighter">

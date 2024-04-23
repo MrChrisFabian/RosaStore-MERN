@@ -19,11 +19,15 @@ const ReserForm = () => {
         service: Yup.string().required('Por favor selecciona'),
         day: Yup.date().required('Este campo es requerido')
             .min(new Date(new Date().getTime() - 24 * 60 * 60 * 1000), 'La fecha debe ser hoy o en el futuro')
-            .max(new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000), 'Por favor selecciona una fecha dentro de los próximos 30 días'),
-        hour: Yup.string().required('Este campo es requerido').test('is-correct-time', 'Debes seleccionar entre las 09:00hs y 17:00hs', (value) => {
+            .max(new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000), 'Por favor selecciona una fecha dentro de los próximos 30 días')
+            .test('is-business-day', 'Lo sentimos no trabajamos Domingos', (value) => {
+                const dayOfWeek = new Date(value).getDay();
+                return dayOfWeek !== 0;
+            }),
+        hour: Yup.string().required('Este campo es requerido').test('is-correct-time', 'Debes seleccionar entre las 08:00hs y 17:00hs', (value) => {
             const time = value.split(':');
             const hours = parseInt(time[0]);
-            return hours >= 9 && hours <= 18;
+            return hours >= 8 && hours <= 18;
         }),
     });
 
@@ -132,7 +136,7 @@ const ReserForm = () => {
                         </div>
                         {/* Show the cost of the service selected */}
                         <div>
-                            <p className='mt-2'>Costo: {Number(serviceSelected).toLocaleString()} gs</p>
+                            <p className='my-2'>Costo: {Number(serviceSelected).toLocaleString()} gs</p>
                         </div>
                         {/* Button for the submit */}
                         <button disabled={isSubmitting} type="submit" className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
