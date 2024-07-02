@@ -11,6 +11,7 @@ import ServiceUpdate from './views/servicios/ServiceUpdate'
 import ReserList from './views/reservas/ReserList'
 import ServiceNew from './views/servicios/ServiceNew'
 import ReserDetail from './views/reservas/ReserDetail'
+import Home from './views/Home'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
   return (
     <UserContext.Provider value={objetoContexto}>
       <Routes>
+        <Route path='/home' element={<Home />} />
         <Route path="/" element={
           <Contenido />
         } />

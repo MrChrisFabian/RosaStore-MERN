@@ -2,10 +2,18 @@ const ReservaModel = require('../models/reserva.model');
 
 module.exports = {
     createNewReserva: (req, res) => {
+
         ReservaModel.create(req.body)
             .then(newlyCreatedReserva => res.status(201).json({ Reserva: newlyCreatedReserva }))
-            .catch(err => res.status(400).json({ message: "Something went wrong creating the Reserva", error: err })
-            );
+            .catch((err) => {
+                if (err.message.includes('reserva validation failed')) {
+                    res.status(400).json({ message: 'Ya existe una reserva con ese día y hora' })
+                }
+                else {
+                    res.status(400).json({ message: `Algo salio mal al crear la reserva, intente de nuevo por favor o contactenos`, error: err.message })
+                }
+            })
+
     },
     getAllReservas: (req, res) => {
         ReservaModel.find()

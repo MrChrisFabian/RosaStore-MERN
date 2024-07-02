@@ -3,29 +3,17 @@ import axios from 'axios'; // Add import statement
 import { Link } from 'react-router-dom'; // Add import statement
 import DeleteButton from '../../components/DeleteButton';
 import NavBar from '@/components/NavBar';
-
+import useReserData from '@/hooks/reserData';
 
 
 const ReserList = () => {
-    const [reservas, setReservas] = useState(null)
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [trigger, setTrigger] = useState(false)
+    const { reservas, isLoading, error } = useReserData(trigger)
 
     const handleDeleteClick = () => {
-        console.log('delete clicked')
+        setTrigger(!trigger)
     }
-    useEffect(() => {
-        axios.get('http://localhost:8000/api/reserva', { withCredentials: true })
-            .then((response) => {
-                setReservas(response.data.Reserva)
-                setIsLoading(false)
-            })
-            .catch((error) => {
-                alert(error)
-                setIsLoading(false)
-                setError(error)
-            })
-    }, [handleDeleteClick]);
+
     if (isLoading) {
         return <>
             <NavBar />
@@ -40,9 +28,8 @@ const ReserList = () => {
             </div></>
     }
     return (
-        <>
-            <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"><div class="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_800px_at_100%_200px,#d5c5ff,transparent)]"></div></div>
-            <NavBar></NavBar>
+        <div className='bg-rose-100 min-h-screen'>
+            <NavBar />
             <div div className='flex flex-col  md:items-center items-start content-center justify-center m-2 overflow-auto' >
                 <div id='container' className='bg-white border border-gray-200 rounded-lg shadow w-fit p-2'>
                     <p>{error}</p>
@@ -79,20 +66,18 @@ const ReserList = () => {
                                             <svg className="w-6 h-6  dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7 7V5" />
                                             </svg>
-
                                             <span className="sr-only">Icon description</span>
                                         </Link>
                                         <DeleteButton element={e} type={'reserva'} onDeleteHandler={handleDeleteClick} />
                                     </th>
                                 </tr>
-
                             ))
                             }
                         </tbody>
                     </table>
                 </div>
             </div>
-        </>)
+        </div>)
 }
 
 export default ReserList

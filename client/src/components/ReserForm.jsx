@@ -5,12 +5,14 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import ModalCustom from './ModalCustom'
 import moment from 'moment'
-
+import { Semanal, Sabado } from '../util/Horarios'
+import useReserData from '@/hooks/reserData'
 
 const ReserForm = () => {
     const [services, setServices] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [serviceSelected, setServiceSelected] = useState(0)
+    const [hour, setHour] = useState('');
     const [good, setGood] = useState(false)
 
     const navigate = useNavigate();
@@ -24,11 +26,7 @@ const ReserForm = () => {
                 const dayOfWeek = new Date(value).getDay();
                 return dayOfWeek !== 0;
             }),
-        hour: Yup.string().required('Este campo es requerido').test('is-correct-time', 'Debes seleccionar entre las 08:00hs y 17:00hs', (value) => {
-            const time = value.split(':');
-            const hours = parseInt(time[0]);
-            return hours >= 8 && hours <= 18;
-        }),
+        hour: Yup.string().required('Este campo es requerido')
     });
 
     // add reservation to the database
@@ -38,11 +36,10 @@ const ReserForm = () => {
             values.service = JSON.parse(values.service).titulo
             values.cost = serviceSelected
             values.day = moment(values.day).format('DD-MM-YYYY')
-            console.log(values.day)
             await axios.post(
                 'http://localhost:8000/api/reserva/', values, { withCredentials: true }
             );
-            // navigate('/');
+            setGood(true)
         }
         catch (error) {
             console.log('Error: ', error)
@@ -51,11 +48,11 @@ const ReserForm = () => {
     }
     // handle submit
 
-    const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
+    const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
         addReservation(values, setErrors)
-        setGood(true)
         setSubmitting(false)
-        resetForm()
+        resetForm();
+
     }
 
     useEffect(() => {
@@ -65,9 +62,10 @@ const ReserForm = () => {
                 setIsLoading(false)
             })
             .catch((error) => {
-                alert(error)
+                console.log(error)
                 setIsLoading(false)
             })
+
     }, [])
     if (isLoading) {
         return <>
@@ -93,20 +91,27 @@ const ReserForm = () => {
             }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}>
+
                 {({ errors, isSubmitting, handleChange }) => (
                     <Form className='m-2 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 '>
                         <h2>Reservar</h2>
                         <hr className='mt-2' />
                         {
                             errors?.general && (
-                                <div className="mt-2 text-sm text-red-600 dark:text-red-500" role="alert">
-                                    {errors.general}
+                                <div className="mt-2 text-sm p-4 bg-red-200 border-red-800 border-2 rounded-lg text-red-900  flex items-center content-center ">
+                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                    </svg>
+
+                                    <div role="alert">
+                                        {errors.general.response.data.message}
+                                    </div>
                                 </div>
                             )
                         }
                         {/* Field para seleccionar un servicio que se nutre de la basedata */}
                         <div className='flex flex-col'>
-                            <label htmlFor='service'>Selecciona un Servicio</label>
+                            <label htmlFor='service'>Selecciona un servicio</label>
                             <Field as='select' name='service' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                 onChange={(e) => {
                                     handleChange(e)
@@ -124,14 +129,27 @@ const ReserForm = () => {
                         </div>
                         {/* Field para seleccionar el día */}
                         <div>
-                            <label htmlFor='day'>Selecciona un dia</label>
+                            <label htmlFor='day'>Selecciona un día</label>
                             <Field type='date' name='day' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
                             <ErrorMessage name='day' component='div' className='mt-2 text-sm text-red-600 dark:text-red-500' />
                         </div>
                         {/* Field para seleccionar la hora */}
                         <div>
                             <label htmlFor='hour'>Selecciona una hora</label>
-                            <Field type='time' name='hour' min='09:00' max='18:00' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                            <Field as='select' name='hour' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                onChange={(e) => {
+                                    handleChange(e)
+                                    setHour(e.target.value)
+                                }}
+                            >
+                                <option value=''>Selecciona una hora </option>
+                                {
+                                    Semanal.map(e => (
+                                        <option key={e.value} value={e.label}>{e.label}</option>
+                                    ))
+                                }
+
+                            </Field>
                             <ErrorMessage name='hour' component='div' className='mt-2 text-sm text-red-600 dark:text-red-500' />
                         </div>
                         {/* Show the cost of the service selected */}

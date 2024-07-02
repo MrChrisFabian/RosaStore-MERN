@@ -75,7 +75,7 @@ const UserForm = ({ formType }) => {
                 {({ errors, isSubmitting }) => (
                     <Form className='block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 '>
 
-                        <h2>{formType === 'login' ? 'Iniciar Sesion' : 'Registrarse'}</h2>
+                        <h2>{formType === 'login' ? 'Iniciar sesión' : 'Registrarse'}</h2>
                         <hr className='mb-2' />
                         {errors?.general && (
                             <div className="mt-2 text-sm text-red-600 dark:text-red-500" role="alert">
@@ -111,7 +111,7 @@ const UserForm = ({ formType }) => {
                         )}
                         <button disabled={isSubmitting} type="submit" className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
                             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                Enviar!
+                                Ingresar
                             </span>
                         </button>
                     </Form>

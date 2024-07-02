@@ -13,7 +13,7 @@ const Login = () => {
         <div>
           <UserForm formType='login' />
           <p>No tienes una cuenta?</p>
-          <Link className='hover:underline text-blue-700' to='/register'>Registrate!</Link>
+          <Link className='hover:underline text-blue-700' to='/register'>Registrate</Link>
         </div>
       </div>
     </>

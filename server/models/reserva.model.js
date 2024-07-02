@@ -35,7 +35,10 @@ const ReservaSchema = new mongoose.Schema({
     timestamps: true,
 });
 
+ReservaSchema.index({ day: 1, hour: 1 }, { unique: true });
+
 ReservaSchema.plugin(uniqueValidator)
+
 const ReservaModel = mongoose.model('reserva', ReservaSchema);
 
 module.exports = ReservaModel;

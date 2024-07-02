@@ -17,7 +17,7 @@ const ModalCustom = ({ handler, handlerSetter, type, functionality }) => {
                             </svg>
                         }
 
-                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{type === 'delete' ? 'Estas seguro que quieres eliminar este elemento?' : 'Su Reserva se a guardado Correctamente'}</h3>
+                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{type === 'delete' ? 'Estas seguro que quieres eliminar este elemento?' : 'Su reserva se ha guardado correctamente'}</h3>
                         {type === 'delete' ? <button onClick={functionality} type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                             Si,Estoy seguro
                         </button> :

@@ -48,25 +48,25 @@ const ReserDetail = () => {
                     <div>
                         <div className='p-1'>
                             <div className='flex'>
-                                <h6 className="mb-3 font-bold text-gray-700 dark:text-gray-400">Costo:</h6>
+                                <h6 className="mb-3 mr-2 font-bold text-gray-700 dark:text-gray-400">Costo:</h6>
                                 <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{`${Number(reserva.cost).toLocaleString()}gs`}</p>
                             </div>
                             <div className='flex'>
-                                <h6 className="mb-3 font-bold text-gray-700 dark:text-gray-400">Servicio:</h6>
+                                <h6 className="mb-3 mr-2 font-bold text-gray-700 dark:text-gray-400">Servicio:</h6>
                                 <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{reserva.service}</p>
                             </div>
-                        </div>
-                    </div>
-                    <div className='flex justify-evenly'>
-                        <div className='flex'>
-                            <h6 className="mb-3 font-bold text-gray-700 dark:text-gray-400">Fecha:</h6>
+                            <div className='flex'>
+                            <h6 className="mb-3 mr-2 font-bold text-gray-700 dark:text-gray-400">Fecha:</h6>
                             <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{`${reserva.day}`}</p>
                         </div>
                         <div className='flex'>
-                            <h6 className="mb-3 font-bold text-gray-700 dark:text-gray-400">Hora:</h6>
+                            <h6 className="mb-3 mr-2 font-bold text-gray-700 dark:text-gray-400">Hora:</h6>
                             <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{`${reserva.hour}`}</p>
                         </div>
+
+                        </div>
                     </div>
+
                     <div className='flex flex-col'>
                         <a target='_blank' href={`https://wa.me/595${reserva.user.phone}`} className="text-purple-400 hover:text-white border border-purple-400 hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-300 dark:text-purple-300 dark:hover:text-white dark:hover:bg-grenn-4</th>00 dark:focus:ring-purple-900">Contactar</a>
                     </div>
