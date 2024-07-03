@@ -32,13 +32,13 @@ const NavBar = () => {
                     <a href='/' className='font-bold text-4xl'>RS</a>
                     <div className="flex items-center content-center justify-evenly">
                         {!localStorage.getItem("user") ?
-                            <NavLink to='/login' className="text-xl text-slate-600 dark:text-slate-500 hover:underline">Login</NavLink> :
+                            <NavLink to='/login' className="text-md text-slate-600 dark:text-slate-500 hover:underline">Login</NavLink> :
 
                             <div className='flex flex-row items-center content-center justify-between'>
                                 <Link to='/reserva' className='text-md text-slate-600 dark:text-slate-500 hover:underline'>Reservar</Link>
 
                                 {localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")).role === "admin" && (<>
-                                    <Link to="/servicios" className="text-ml ml-4 text-slate-600 dark:text-slate-500 hover:underline">Servicios</Link>
+                                    <Link to="/servicios" className="text-md ml-4 text-slate-600 dark:text-slate-500 hover:underline">Servicios</Link>
                                     <Link to="/reservas" className="texl-md ml-4 text-slate-600 dark:text-slate-500 hover:underline">Reservas</Link>
                                 </>
                                 )}

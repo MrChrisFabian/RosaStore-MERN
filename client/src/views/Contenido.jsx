@@ -24,7 +24,7 @@ const Contenido = () => {
                         </section>
                         {/* imagen de la landing  Tiene que estar a la derecha*/}
                         <div className='flex-1'>
-                            <img src="../public/images/landing.webp" className='rounded' alt="Manos con uñas pintadas" />
+                            <img src="/images/landing.webp" className='rounded' alt="Manos con uñas pintadas" />
                         </div>
                     </main>
 
@@ -32,9 +32,9 @@ const Contenido = () => {
                         <section className='flex-1 p-4 flex flex-col items-center content-center justify-evenly'>
                             <h1 className='text-2xl font-bold text-gray-800 bg-gradient-to-r from-slate-600 via-slate-700 to-slate-600 text-transparent bg-clip-text dark:text-white'>Algunos servicios</h1>
                             <div id='services' className='flex md:flex-row flex-col mt-4 justify-evenly'>
-                                <CardService imgSrc='../public/images/card1.webp' titulo='Manicura' text="Disfruta de una excelente atención" />
-                                <CardService imgSrc='../public/images/card2.webp' titulo='Acrilicos' text="Solo lo mejor para tus manos" />
-                                <CardService imgSrc='../public/images/card3.webp' titulo='Esmaltados' text="Arte que te acompaña" />                            </div>
+                                <CardService imgSrc='/images/card1.webp' titulo='Manicura' text="Disfruta de una excelente atención" />
+                                <CardService imgSrc='/images/card2.webp' titulo='Acrilicos' text="Solo lo mejor para tus manos" />
+                                <CardService imgSrc='/images/card3.webp' titulo='Esmaltados' text="Arte que te acompaña" />                            </div>
                         </section>
                     </article>
 
